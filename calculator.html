@@ -2,85 +2,77 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Calculator</title>
+<title>Premium Calculator</title>
+
 <style>
     body {
-        background: #111;
+        margin: 0;
+        height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #141e30, #243b55);
+        font-family: 'Segoe UI', sans-serif;
     }
 
     .calculator {
-        position: relative;
-        width: 260px;
+        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 20px;
         padding: 20px;
-        background: #222;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        overflow: hidden;
-    }
-
-    /* Watermark */
-    .watermark {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 22px;
-        color: rgba(255, 255, 255, 0.08); /* light watermark */
-        white-space: nowrap;
-        pointer-events: none;
+        width: 300px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.6);
     }
 
     #display {
         width: 100%;
-        height: 50px;
-        font-size: 22px;
-        margin-bottom: 10px;
+        height: 60px;
+        font-size: 26px;
         text-align: right;
         padding-right: 10px;
         border: none;
-        border-radius: 8px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        background: rgba(255,255,255,0.15);
+        color: white;
     }
 
     .buttons {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
+        gap: 10px;
     }
 
     button {
-        height: 45px;
+        height: 55px;
         font-size: 18px;
         border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        background: #444;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.12);
         color: white;
+        cursor: pointer;
+        transition: 0.2s;
     }
 
     button:hover {
-        background: #666;
+        background: rgba(255,255,255,0.25);
+        transform: scale(1.05);
     }
 
     .equal {
-        background: #ff9500;
+        background: #ff4b5c;
     }
 </style>
 </head>
+
 <body>
 
 <div class="calculator">
-    <div class="watermark">AMIT KUMAR YADAV</div>
-
     <input type="text" id="display" disabled>
 
     <div class="buttons">
         <button onclick="clearDisplay()">C</button>
-        <button onclick="deleteLast()">⌫</button>
+        <button onclick="del()">⌫</button>
         <button onclick="append('%')">%</button>
         <button onclick="append('/')">÷</button>
 
@@ -106,24 +98,32 @@
 </div>
 
 <script>
-function append(value) {
-    document.getElementById("display").value += value;
+function append(val){
+    document.getElementById("display").value += val;
 }
 
-function clearDisplay() {
+function clearDisplay(){
     document.getElementById("display").value = "";
 }
 
-function deleteLast() {
+function del(){
     let current = document.getElementById("display").value;
-    document.getElementById("display").value = current.slice(0, -1);
+    document.getElementById("display").value = current.slice(0,-1);
 }
 
-function calculate() {
-    try {
-        document.getElementById("display").value = eval(document.getElementById("display").value);
+function calculate(){
+    let expression = document.getElementById("display").value;
+
+    // Secret trigger
+    if(expression.replace(/\s/g,'') === "1+4+2"){
+        document.getElementById("display").value = "Amit ♥ Simran";
+        return;
+    }
+
+    try{
+        document.getElementById("display").value = eval(expression);
     } catch {
-        alert("Invalid Input");
+        document.getElementById("display").value = "Error";
     }
 }
 </script>
