@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Our Love Story</title>
+<title>Miles Apart, Hearts Together</title>
 
 <style>
 body {
   margin: 0;
   overflow: hidden;
   font-family: 'Segoe UI', sans-serif;
+  background: black;
   color: white;
 }
 
@@ -17,141 +18,149 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  text-align: center;
-  transition: opacity 1.5s;
+  opacity: 0;
+  transition: opacity 2s;
 }
-.active { display: flex; }
+
+/* Active scene */
+.active {
+  opacity: 1;
+}
+
+/* Characters */
+.character {
+  position: absolute;
+  bottom: 40px;
+  width: 120px;
+}
+
+/* Boy */
+.boy {
+  left: 10%;
+}
+
+/* Girl */
+.girl {
+  right: 10%;
+}
+
+/* Text */
+.text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 15%;
+  font-size: 28px;
+  text-shadow: 0 0 10px black;
+}
 
 /* Backgrounds */
-.city { background: linear-gradient(#0f2027,#203a43,#2c5364); }
-.sunrise { background: linear-gradient(#ff9966,#ff5e62); }
-.night { background: linear-gradient(#000000,#434343); }
-.taj { background: linear-gradient(#001f3f,#0074D9); }
+.city { background: url('https://images.unsplash.com/photo-1508057198894-247b23fe5ade?q=80&w=1920') center/cover; }
+.night { background: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1920') center/cover; }
+.moon { background: url('https://images.unsplash.com/photo-1508261303786-0e0f28b3de8c?q=80&w=1920') center/cover; }
+.airport { background: url('https://images.unsplash.com/photo-1504198453319-5ce911bafcde?q=80&w=1920') center/cover; }
 
-/* Glass text */
-.glass {
-  background: rgba(0,0,0,0.4);
-  padding: 15px 25px;
-  border-radius: 20px;
-}
-
-/* SVG Characters */
-.char {
-  width: 120px;
-  height: 120px;
-}
-
-/* Heart beat */
-.heart {
-  font-size: 60px;
-  animation: beat 1s infinite;
-}
-@keyframes beat {
-  50% { transform: scale(1.3); }
-}
-
-/* Camera zoom effect */
-.zoom {
-  animation: zoomIn 4s linear forwards;
-}
-@keyframes zoomIn {
-  from { transform: scale(1); }
-  to { transform: scale(1.1); }
+button {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  font-size: 18px;
+  background: pink;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- Scene 1 -->
-<div class="scene active city zoom" id="s1">
-  <div class="glass">
-    <!-- Boy SVG -->
-    <svg class="char" viewBox="0 0 100 100">
-      <circle cx="50" cy="35" r="20" fill="#ffd1a9"/>
-      <rect x="30" y="55" width="40" height="35" fill="#3498db"/>
-    </svg>
-    <p>I was just a boy…</p>
-  </div>
-</div>
+<!-- 🎵 Background Music -->
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_1c64d6b36e.mp3?filename=romantic-background-112191.mp3">
+</audio>
 
-<!-- Scene 2 -->
-<div class="scene sunrise zoom" id="s2">
-  <div class="glass">
-    <!-- Girl SVG -->
-    <svg class="char" viewBox="0 0 100 100">
-      <circle cx="50" cy="35" r="20" fill="#ffd1a9"/>
-      <rect x="30" y="55" width="40" height="35" fill="#e84393"/>
-    </svg>
-    <p>She was my whole world…</p>
-  </div>
-</div>
-
-<!-- Scene 3 -->
-<div class="scene night zoom" id="s3">
-  <div class="glass">
-    <div style="font-size:70px;">👧 ❤️ 👦</div>
-    <p>Our hearts found each other</p>
-  </div>
-</div>
-
-<!-- Scene 4 -->
-<div class="scene night zoom" id="s4">
-  <div class="glass">
-    <div style="font-size:70px;">👧 💔 👦</div>
-    <p>But distance tested our love</p>
-  </div>
-</div>
-
-<!-- Scene 5 -->
-<div class="scene sunrise zoom" id="s5">
-  <div class="glass">
-    <div style="font-size:70px;">👦 💍 👧</div>
-    <p>Will you stay forever?</p>
-  </div>
-</div>
-
-<!-- Scene 6 -->
-<div class="scene taj zoom" id="s6">
-  <div class="glass">
-    <div style="font-size:70px;">👧 💞 👦</div>
-    <p>Love always wins</p>
-  </div>
-</div>
-
-<!-- Scene 7 -->
-<div class="scene night zoom" id="s7">
-  <div class="glass">
-    <h1>💖 Our Story Never Ends 💖</h1>
-  </div>
-</div>
-
+<!-- 🎙️ Voice Narration -->
 <script>
-let scene = 1;
-const total = 7;
-
-function nextScene() {
-  document.getElementById("s" + scene).classList.remove("active");
-  scene = scene % total + 1;
-  document.getElementById("s" + scene).classList.add("active");
+function speak(text){
+  const msg = new SpeechSynthesisUtterance(text);
+  msg.rate = 0.9;
+  speechSynthesis.speak(msg);
 }
-
-setInterval(nextScene, 5000);
 </script>
 
-<!-- Voice narration -->
-<audio autoplay>
-  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav">
-</audio>
+<!-- 🎬 SCENE 1 -->
+<div class="scene city active" id="scene1">
+  <div class="text">Miles apart… but hearts connected.</div>
+  <img class="character boy" src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+  <img class="character girl" src="https://cdn-icons-png.flaticon.com/512/4140/4140051.png">
+</div>
 
-<!-- Background music -->
-<audio autoplay loop>
-  <source src="https://www2.cs.uic.edu/~i101/SoundFiles/ImperialMarch60.wav" type="audio/wav">
-</audio>
+<!-- 🎬 SCENE 2 -->
+<div class="scene night" id="scene2">
+  <div class="text">Every night, they miss each other…</div>
+  <img class="character boy" src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+  <img class="character girl" src="https://cdn-icons-png.flaticon.com/512/4140/4140051.png">
+</div>
+
+<!-- 🎬 SCENE 3 -->
+<div class="scene moon" id="scene3">
+  <div class="text">"Can you hear me?"</div>
+  <img class="character boy" src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+  <img class="character girl" src="https://cdn-icons-png.flaticon.com/512/4140/4140051.png">
+</div>
+
+<!-- 🎬 SCENE 4 -->
+<div class="scene moon" id="scene4">
+  <div class="text">Same moon… same love.</div>
+  <img class="character boy" src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+  <img class="character girl" src="https://cdn-icons-png.flaticon.com/512/4140/4140051.png">
+</div>
+
+<!-- 🎬 SCENE 5 -->
+<div class="scene airport" id="scene5">
+  <div class="text">Soon… no more distance.</div>
+  <img class="character boy" src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png">
+  <img class="character girl" src="https://cdn-icons-png.flaticon.com/512/4140/4140051.png">
+</div>
+
+<button onclick="startFilm()">▶ Start Film</button>
+
+<script>
+const scenes = ["scene1","scene2","scene3","scene4","scene5"];
+let current = 0;
+
+function showScene(index){
+  document.querySelectorAll(".scene").forEach(s=>s.classList.remove("active"));
+  document.getElementById(scenes[index]).classList.add("active");
+}
+
+function startFilm(){
+  document.getElementById("music").play();
+  playScene();
+}
+
+function playScene(){
+  if(current >= scenes.length) return;
+
+  showScene(current);
+
+  const texts = [
+    "Miles apart… but hearts connected.",
+    "Every night, they miss each other.",
+    "Can you hear me?",
+    "Same moon. Same love.",
+    "Soon… no more distance."
+  ];
+
+  speak(texts[current]);
+
+  current++;
+  setTimeout(playScene, 5000);
+}
+</script>
 
 </body>
 </html>
