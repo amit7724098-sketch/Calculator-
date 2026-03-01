@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Miles Apart, Hearts Together</title>
+<title>Bollywood Love Story</title>
 
 <style>
 body {
   margin: 0;
-  background: black;
+  background: linear-gradient(to top, #000000, #1a001a);
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', sans-serif;
   overflow: hidden;
 }
 
@@ -21,132 +21,123 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 28px;
   text-align: center;
 }
 
 .active { display: flex; }
 
-.character {
-  font-size: 60px;
+.cartoon {
+  font-size: 80px;
 }
 
-.heart {
+.title {
   font-size: 40px;
-  position: relative;
-  animation: moveHeart 3s linear infinite;
+  color: #ff4da6;
+  text-shadow: 0 0 20px pink;
 }
 
-@keyframes moveHeart {
-  0% { left: -200px; }
-  100% { left: 200px; }
+/* Cinematic fade */
+.fade { animation: fadeIn 2s; }
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+/* Heart pulse */
+.heart {
+  font-size: 50px;
+  animation: pulse 1.2s infinite;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
 }
 
+/* Flying airplane */
 .plane {
   font-size: 40px;
   position: relative;
-  animation: fly 4s linear infinite;
+  animation: fly 5s linear infinite;
 }
-
 @keyframes fly {
-  0% { left: -300px; }
-  100% { left: 300px; }
+  0% { left: -400px; }
+  100% { left: 400px; }
 }
 
-.moon {
-  font-size: 80px;
-  animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-  from { opacity: 0.5; }
-  to { opacity: 1; }
-}
-
-.hug {
-  font-size: 60px;
-  animation: hug 1.5s infinite alternate;
-}
-
-@keyframes hug {
-  from { transform: scale(1); }
-  to { transform: scale(1.2); }
-}
-
-.fade {
-  animation: fadeIn 2s;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Sparkle stars */
+.stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url('https://i.imgur.com/9QZ7Z5x.png');
+  opacity: 0.2;
 }
 </style>
 </head>
 
 <body>
 
+<div class="stars"></div>
+
 <!-- Scene 1 -->
 <div class="scene active fade" id="s1">
-  <div>🌆 Girl &nbsp;&nbsp;&nbsp;&nbsp; Boy 🌃</div>
-  <div class="character">(•‿•) &nbsp;&nbsp;&nbsp;&nbsp; (•‿•)</div>
-  <p>── miles apart ──</p>
+  <div class="title">Ek Pyar Ki Kahani</div>
+  <div class="cartoon">👧 🌆 &nbsp;&nbsp;&nbsp; 🌃 👦</div>
+  <p>Miles apart… but hearts connected.</p>
 </div>
 
 <!-- Scene 2 -->
 <div class="scene fade" id="s2">
-  <div>Girl 💭💖────────────💖💭 Boy</div>
-  <div class="character">(•︵•) &nbsp;&nbsp;&nbsp;&nbsp; (•︵•)</div>
-  <p>Missing each other</p>
+  <div class="cartoon">👧 💭 ❤️ 💭 👦</div>
+  <p>Har raat tum yaad aate ho…</p>
 </div>
 
 <!-- Scene 3 -->
 <div class="scene fade" id="s3">
-  <div>Girl ☎️💙 ~~~~~ Boy</div>
-  <div class="character">(•ᴗ•) &nbsp;&nbsp;&nbsp;&nbsp; (•ᴗ•)</div>
-  <p>“Can you hear me?”</p>
+  <div class="cartoon">👧 ☎️ 💕 👦</div>
+  <p>"Sun rahe ho?"</p>
+  <p>"Hamesha."</p>
 </div>
 
 <!-- Scene 4 -->
 <div class="scene fade" id="s4">
-  <div>Girl <span class="heart">💗</span> Boy</div>
+  <div class="cartoon">👧 <span class="heart">💖</span> 👦</div>
+  <p>Dooriyan sirf raaston ki hoti hain…</p>
 </div>
 
 <!-- Scene 5 -->
 <div class="scene fade" id="s5">
-  <div class="moon">🌙</div>
-  <p>Same moon, same love</p>
+  <div class="cartoon">🌙</div>
+  <p>Ek hi chaand… ek hi pyar.</p>
 </div>
 
 <!-- Scene 6 -->
 <div class="scene fade" id="s6">
   <div class="plane">✈️</div>
-  <p>Coming closer...</p>
+  <p>Safar khatam hone wala hai…</p>
 </div>
 
 <!-- Scene 7 -->
 <div class="scene fade" id="s7">
-  <div class="hug">(づ｡◕‿‿◕｡)づ 💞 (｡◕‿‿◕｡づ)</div>
-  <p>Finally Together</p>
+  <div class="cartoon">(づ｡◕‿‿◕｡)づ 💞 (｡◕‿‿◕｡づ)</div>
+  <p>Ab koi doori nahi ❤️</p>
 </div>
 
 <!-- Scene 8 -->
 <div class="scene fade" id="s8">
-  <h1>💖 Girl ♡ Boy 💖</h1>
-  <p>Forever.</p>
+  <div class="title">👧 ♡ 👦</div>
+  <p>Forever Together</p>
 </div>
 
 <script>
-let currentScene = 1;
-const totalScenes = 8;
+let scene = 1;
+const total = 8;
 
 function nextScene() {
-  document.getElementById("s" + currentScene).classList.remove("active");
-  currentScene = currentScene % totalScenes + 1;
-  document.getElementById("s" + currentScene).classList.add("active");
+  document.getElementById("s" + scene).classList.remove("active");
+  scene = scene % total + 1;
+  document.getElementById("s" + scene).classList.add("active");
 }
 
-setInterval(nextScene, 3000);
+setInterval(nextScene, 3500);
 </script>
 
 </body>
