@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Miles Apart, Hearts Together</title>
+
 <style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
   background: black;
   color: white;
-  text-align: center;
+  font-family: Arial, sans-serif;
   overflow: hidden;
 }
 
-.frame {
+.scene {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -22,78 +22,131 @@ body {
   align-items: center;
   flex-direction: column;
   font-size: 28px;
+  text-align: center;
 }
 
 .active { display: flex; }
 
+.character {
+  font-size: 60px;
+}
+
 .heart {
   font-size: 40px;
+  position: relative;
   animation: moveHeart 3s linear infinite;
 }
 
 @keyframes moveHeart {
-  0% { transform: translateX(-200px); }
-  100% { transform: translateX(200px); }
+  0% { left: -200px; }
+  100% { left: 200px; }
+}
+
+.plane {
+  font-size: 40px;
+  position: relative;
+  animation: fly 4s linear infinite;
+}
+
+@keyframes fly {
+  0% { left: -300px; }
+  100% { left: 300px; }
 }
 
 .moon {
-  font-size: 60px;
+  font-size: 80px;
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
 }
 
 .hug {
-  font-size: 50px;
-  animation: hugMove 2s infinite alternate;
+  font-size: 60px;
+  animation: hug 1.5s infinite alternate;
 }
 
-@keyframes hugMove {
+@keyframes hug {
   from { transform: scale(1); }
   to { transform: scale(1.2); }
 }
+
+.fade {
+  animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 </style>
 </head>
+
 <body>
 
-<div class="frame active" id="f1">
-  🌆 Ammu &nbsp;&nbsp;&nbsp;&nbsp; Simmy 🌃
+<!-- Scene 1 -->
+<div class="scene active fade" id="s1">
+  <div>🌆 Girl &nbsp;&nbsp;&nbsp;&nbsp; Boy 🌃</div>
+  <div class="character">(•‿•) &nbsp;&nbsp;&nbsp;&nbsp; (•‿•)</div>
   <p>── miles apart ──</p>
 </div>
 
-<div class="frame" id="f2">
-  Ammu 💭💖────────────💖💭 Simmy
+<!-- Scene 2 -->
+<div class="scene fade" id="s2">
+  <div>Girl 💭💖────────────💖💭 Boy</div>
+  <div class="character">(•︵•) &nbsp;&nbsp;&nbsp;&nbsp; (•︵•)</div>
   <p>Missing each other</p>
 </div>
 
-<div class="frame" id="f3">
-  Ammu ☎️💙 ~~~~~ Simmy
+<!-- Scene 3 -->
+<div class="scene fade" id="s3">
+  <div>Girl ☎️💙 ~~~~~ Boy</div>
+  <div class="character">(•ᴗ•) &nbsp;&nbsp;&nbsp;&nbsp; (•ᴗ•)</div>
   <p>“Can you hear me?”</p>
 </div>
 
-<div class="frame" id="f4">
-  Ammu <span class="heart">💗</span> Simmy
+<!-- Scene 4 -->
+<div class="scene fade" id="s4">
+  <div>Girl <span class="heart">💗</span> Boy</div>
 </div>
 
-<div class="frame" id="f5">
+<!-- Scene 5 -->
+<div class="scene fade" id="s5">
   <div class="moon">🌙</div>
   <p>Same moon, same love</p>
 </div>
 
-<div class="frame" id="f6">
-  ✈️ Ammu ⟶⟶⟶ Simmy ✈️
-  <div class="hug">(づ｡◕‿‿◕｡)づ♡(｡◕‿‿◕｡づ)</div>
-  <p>No More Distance 🤍</p>
+<!-- Scene 6 -->
+<div class="scene fade" id="s6">
+  <div class="plane">✈️</div>
+  <p>Coming closer...</p>
+</div>
+
+<!-- Scene 7 -->
+<div class="scene fade" id="s7">
+  <div class="hug">(づ｡◕‿‿◕｡)づ 💞 (｡◕‿‿◕｡づ)</div>
+  <p>Finally Together</p>
+</div>
+
+<!-- Scene 8 -->
+<div class="scene fade" id="s8">
+  <h1>💖 Girl ♡ Boy 💖</h1>
+  <p>Forever.</p>
 </div>
 
 <script>
-let current = 1;
-const totalFrames = 6;
+let currentScene = 1;
+const totalScenes = 8;
 
-function showNextFrame() {
-  document.getElementById("f" + current).classList.remove("active");
-  current = current % totalFrames + 1;
-  document.getElementById("f" + current).classList.add("active");
+function nextScene() {
+  document.getElementById("s" + currentScene).classList.remove("active");
+  currentScene = currentScene % totalScenes + 1;
+  document.getElementById("s" + currentScene).classList.add("active");
 }
 
-setInterval(showNextFrame, 3000);
+setInterval(nextScene, 3000);
 </script>
 
 </body>
