@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        :root {
+            --pink: #ff85a2;
+            --dark-pink: #f73363;
+        }
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #fff0f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+        /* Landing Countdown */
+        #countdown-screen {
+            font-size: 5rem;
+            color: var(--dark-pink);
+            font-weight: bold;
+        }
+        /* Surprise Content */
+        #surprise-content {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 2s ease-in;
+        }
+        .message {
+            font-size: 1.5rem;
+            color: var(--dark-pink);
+            margin: 20px;
+        }
+        .cake-img {
+            width: 200px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .cake-img:hover {
+            transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="countdown-screen">3</div>
+
+    <div id="surprise-content">
+        <h1 class="message">My girl was born 20 years ago today! 🎂</h1>
+        <p>Swipe (Click) the cake to celebrate!</p>
+        <img src="https://cdn-icons-png.flaticon.com/512/3132/3132693.png" 
+             class="cake-img" id="cake" alt="Birthday Cake">
+        <div id="final-message" style="display:none; margin-top:20px;">
+            <h2>Happy Birthday, My Girl! ❤️</h2>
+            <p>You make every day brighter.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        const countElement = document.getElementById('countdown-screen');
+        const surprise = document.getElementById('surprise-content');
+        const cake = document.getElementById('cake');
+        let timeLeft = 3;
+
+        // 1. Countdown Logic
+        const timer = setInterval(() => {
+            timeLeft--;
+            if (timeLeft > 0) {
+                countElement.innerText = timeLeft;
+            } else {
+                clearInterval(timer);
+                countElement.style.display = 'none';
+                surprise.style.display = 'flex';
+            }
+        }, 1000);
+
+        // 2. Interaction (Cut the Cake/Confetti)
+        cake.addEventListener('click', () => {
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff85a2', '#f73363', '#ffffff']
+            });
+            document.getElementById('final-message').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
