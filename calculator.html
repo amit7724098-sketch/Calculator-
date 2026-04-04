@@ -4,81 +4,80 @@
 <meta charset="UTF-8">
 <title>Stylish Calculator</title>
 
-<!-- Google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@500&display=swap" rel="stylesheet">
 
 <style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: linear-gradient(135deg, #1f1c2c, #928dab);
-        font-family: 'Poppins', sans-serif;
-    }
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #1f1c2c, #928dab);
+    font-family: 'Poppins', sans-serif;
+}
 
-    .calculator {
-        background: #111;
-        padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-        width: 260px;
-    }
+.calculator {
+    background: #111;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    width: 260px;
+}
 
-    #display {
-        width: 100%;
-        height: 60px;
-        font-size: 28px;
-        margin-bottom: 15px;
-        text-align: right;
-        padding: 10px;
-        border: none;
-        border-radius: 10px;
-        outline: none;
-        background: #222;
-        color: #fff;
-    }
+#display {
+    width: 100%;
+    height: 60px;
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-align: right;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    background: #222;
+    color: #fff;
+}
 
-    .buttons {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 10px;
-    }
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
 
-    button {
-        height: 55px;
-        font-size: 18px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        background: #333;
-        color: white;
-        transition: 0.2s;
-    }
+button {
+    height: 55px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #333;
+    color: white;
+    transition: 0.2s;
+}
 
-    button:hover {
-        background: #555;
-    }
+button:hover {
+    background: #555;
+}
 
-    .equal {
-        background: #6c5ce7;
-    }
+.equal {
+    background: #6c5ce7;
+}
 
-    .equal:hover {
-        background: #4834d4;
-    }
+.equal:hover {
+    background: #4834d4;
+}
 
-    /* Stylish Himanshi text */
-    .special {
-        text-align: center;
-        font-family: 'Orbitron', sans-serif;
-        font-size: 32px;
-        color: #00ffe0;
-        letter-spacing: 3px;
-        text-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
-    }
+.special {
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 32px;
+    color: #00ffe0;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
+}
 </style>
 </head>
+
 <body>
 
 <div class="calculator">
@@ -122,17 +121,20 @@ function clearDisplay() {
 
 function calculate() {
     let display = document.getElementById("display");
-    let expression = display.value;
 
-    if (expression === "2+2") {
-        display.value = "Himanshi";
-        display.classList.add("special");
-    } else {
-        try {
-            display.value = eval(expression);
-        } catch {
-            display.value = "Error";
+    try {
+        let result = eval(display.value);
+
+        if (result == 4) {
+            display.value = "Himanshi"; // ✅ FIXED NAME
+            display.classList.add("special");
+        } else {
+            display.value = result;
+            display.classList.remove("special");
         }
+
+    } catch {
+        display.value = "Error";
     }
 }
 </script>
