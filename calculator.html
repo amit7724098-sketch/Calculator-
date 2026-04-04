@@ -2,71 +2,80 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Special Calculator</title>
+<title>Stylish Calculator</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@500&display=swap" rel="stylesheet">
+
 <style>
     body {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1f1c2c, #928dab);
+        font-family: 'Poppins', sans-serif;
     }
 
     .calculator {
-        background: #222;
+        background: #111;
         padding: 20px;
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        border-radius: 20px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        width: 260px;
     }
 
     #display {
         width: 100%;
         height: 60px;
-        font-size: 24px;
+        font-size: 28px;
         margin-bottom: 15px;
         text-align: right;
         padding: 10px;
         border: none;
         border-radius: 10px;
         outline: none;
+        background: #222;
+        color: #fff; /* FIX: numbers visible */
     }
 
     .buttons {
         display: grid;
-        grid-template-columns: repeat(4, 60px);
+        grid-template-columns: repeat(4, 1fr);
         gap: 10px;
     }
 
     button {
-        height: 60px;
+        height: 55px;
         font-size: 18px;
         border: none;
         border-radius: 10px;
         cursor: pointer;
-        background: #444;
+        background: #333;
         color: white;
         transition: 0.2s;
     }
 
     button:hover {
-        background: #666;
+        background: #555;
     }
 
     .equal {
-        background: #ff4b5c;
+        background: #6c5ce7;
     }
 
     .equal:hover {
-        background: #ff1e3c;
+        background: #4834d4;
     }
 
+    /* Stylish Himansi text */
     .special {
-        color: #ff4b5c;
-        font-weight: bold;
-        font-size: 26px;
         text-align: center;
-        letter-spacing: 2px;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 32px;
+        color: #00ffe0;
+        letter-spacing: 3px;
+        text-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
     }
 </style>
 </head>
@@ -100,25 +109,29 @@
 
 <script>
 function append(value) {
-    document.getElementById("display").value += value;
+    let display = document.getElementById("display");
+    display.value += value;
+    display.classList.remove("special"); // reset style
 }
 
 function clearDisplay() {
-    document.getElementById("display").value = "";
+    let display = document.getElementById("display");
+    display.value = "";
+    display.classList.remove("special");
 }
 
 function calculate() {
-    let expression = document.getElementById("display").value;
+    let display = document.getElementById("display");
+    let expression = display.value;
 
     if (expression === "2+2") {
-        document.getElementById("display").value = "💖 Himansi 💖";
-        document.getElementById("display").classList.add("special");
+        display.value = "Himansi";
+        display.classList.add("special");
     } else {
         try {
-            document.getElementById("display").value = eval(expression);
-            document.getElementById("display").classList.remove("special");
+            display.value = eval(expression);
         } catch {
-            document.getElementById("display").value = "Error";
+            display.value = "Error";
         }
     }
 }
