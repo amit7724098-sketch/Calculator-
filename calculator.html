@@ -6,7 +6,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-<title>Romantic Calculator</title>
+<title>Anshika</title>
 
 <style>
 body {
@@ -51,19 +51,19 @@ body {
     margin-left: auto;
 }
 
-/* LOVE SCROLL */
+/* SCROLLING LOVE TEXT */
 .love-scroll {
     position: absolute;
     white-space: nowrap;
     font-family: 'Great Vibes', cursive;
-    font-size: 34px;
+    font-size: 36px;
     font-weight: bold;
     color: #ff2e63;
     text-shadow: 0 0 10px #ff2e63;
-    animation: scrollText 10s linear infinite;
+    animation: scrollText 12s linear infinite;
 }
 
-/* SCROLL ANIMATION */
+/* LEFT TO RIGHT CONTINUOUS */
 @keyframes scrollText {
     0% { transform: translateX(100%); }
     100% { transform: translateX(-100%); }
@@ -85,12 +85,10 @@ button {
     cursor: pointer;
     background: rgba(255,255,255,0.1);
     color: #ff4d88;
-    transition: 0.3s;
 }
 
 button:hover {
     transform: scale(1.1);
-    box-shadow: 0 0 15px #ff4d88;
 }
 
 .operator { background: #ff2e63; color: white; }
@@ -111,18 +109,7 @@ button:hover {
     }
 }
 
-/* HEART BLAST */
-.blast {
-    position: absolute;
-    font-size: 25px;
-    animation: blast 1.5s forwards;
-}
-@keyframes blast {
-    0% { opacity: 1; }
-    100% { transform: translateY(-300px) scale(2); opacity: 0; }
-}
-
-/* Footer */
+/* FOOTER */
 .footer {
     margin-top: 20px;
     color: #ff4d88;
@@ -172,18 +159,24 @@ let displayText = document.getElementById("displayText");
 
 /* INPUT */
 function add(v){
-    displayText.classList.remove("love-scroll");
-    displayText.style.position = "static";
+    removeScroll();
     if(displayText.innerText === "0") displayText.innerText = "";
     displayText.innerText += v;
 }
 
 function clr(){
+    removeScroll();
     displayText.innerText = "";
 }
 
 function del(){
     displayText.innerText = displayText.innerText.slice(0,-1);
+}
+
+/* REMOVE SCROLL STYLE */
+function removeScroll(){
+    displayText.classList.remove("love-scroll");
+    displayText.style.position = "static";
 }
 
 /* CALCULATE */
@@ -192,12 +185,10 @@ function calculate(){
 
     if(exp === "1+4+3"){
         showScrollingLove();
-        heartBlast();
         heartRain();
     } else {
         try{
-            displayText.classList.remove("love-scroll");
-            displayText.style.position = "static";
+            removeScroll();
             displayText.innerText = eval(exp);
         }catch{
             displayText.innerText = "Error";
@@ -205,23 +196,10 @@ function calculate(){
     }
 }
 
-/* SCROLLING LOVE TEXT */
+/* SHOW SCROLLING TEXT INSIDE DISPLAY */
 function showScrollingLove(){
     displayText.innerText = "Anshika ❤️ Santosh";
     displayText.classList.add("love-scroll");
-}
-
-/* HEART BLAST */
-function heartBlast(){
-    for(let i=0;i<25;i++){
-        let h = document.createElement("div");
-        h.className = "blast";
-        h.innerHTML = "❤️";
-        h.style.left = Math.random()*100 + "vw";
-        h.style.top = "60vh";
-        document.body.appendChild(h);
-        setTimeout(()=>h.remove(),1500);
-    }
 }
 
 /* HEART RAIN */
