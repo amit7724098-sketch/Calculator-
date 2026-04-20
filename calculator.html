@@ -3,44 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Romantic Calculator</title>
 
-<!-- Romantic Font -->
+<!-- PROPER FONT LOAD -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<title>Romantic Calculator</title>
 
 <style>
 body {
     margin: 0;
     height: 100vh;
+    background: linear-gradient(135deg, #ff6a88, #ff99ac);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
     font-family: 'Poppins', sans-serif;
     overflow: hidden;
 }
 
 /* Calculator */
 .calc {
-    background: white;
+    background: #ffffff;
     padding: 20px;
-    border-radius: 25px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     width: 300px;
     z-index: 10;
 }
 
+/* Display */
 #display {
     width: 100%;
-    height: 60px;
+    height: 65px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 22px;
     text-align: right;
     padding: 10px;
     background: #fff0f5;
     color: #d81b60;
+}
+
+/* Romantic font (APPLIED PROPERLY) */
+.love-text {
+    font-family: 'Great Vibes', cursive !important;
+    font-size: 30px;
+    text-align: center;
+    color: #ff1744;
+    letter-spacing: 2px;
 }
 
 /* Buttons */
@@ -52,8 +63,8 @@ body {
 
 button {
     height: 50px;
-    border: none;
     border-radius: 12px;
+    border: none;
     font-size: 18px;
     cursor: pointer;
     background: #fce4ec;
@@ -63,43 +74,46 @@ button {
 
 button:hover {
     transform: scale(1.1);
-    background: #f8bbd0;
 }
 
 .operator { background: #f06292; color: white; }
 .equal { background: #ff4081; color: white; grid-column: span 2; }
 
-/* Romantic Name Style */
-.romantic-text {
-    font-family: 'Great Vibes', cursive;
-    font-size: 26px;
-    text-align: center;
-    color: #ff1744;
+/* GLOW EFFECT */
+.glow {
+    animation: glow 1s ease;
+}
+@keyframes glow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); color: #ff0000; }
+    100% { transform: scale(1); }
 }
 
-/* Floating Hearts Background */
-.bg-heart {
+/* HEART RAIN */
+.rain-heart {
     position: absolute;
-    color: rgba(255,255,255,0.7);
+    top: -10px;
     font-size: 18px;
-    animation: floatUp linear infinite;
+    color: red;
+    animation: fall linear infinite;
 }
 
-@keyframes floatUp {
-    0% { transform: translateY(100vh) scale(1); opacity: 1; }
-    100% { transform: translateY(-10vh) scale(2); opacity: 0; }
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+        opacity: 0;
+    }
 }
 
-/* Blast Hearts */
-.heart {
+/* EXPLOSION */
+.blast {
     position: absolute;
-    font-size: 20px;
-    animation: blast 2s linear forwards;
+    font-size: 22px;
+    animation: blastAnim 1.5s forwards;
 }
-
-@keyframes blast {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-400px); opacity: 0; }
+@keyframes blastAnim {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: translateY(-300px) scale(2); opacity: 0; }
 }
 
 .footer {
@@ -116,7 +130,7 @@ button:hover {
     <input type="text" id="display" disabled placeholder="0">
 
     <div class="buttons">
-        <button onclick="clearDisplay()">C</button>
+        <button onclick="clr()">C</button>
         <button onclick="add('/')">/</button>
         <button onclick="add('*')">×</button>
         <button onclick="del()">DEL</button>
@@ -134,7 +148,7 @@ button:hover {
         <button onclick="add('1')">1</button>
         <button onclick="add('2')">2</button>
         <button onclick="add('3')">3</button>
-        <button onclick="calculate()" class="equal">=</button>
+        <button onclick="calc()" class="equal">=</button>
 
         <button onclick="add('0')" style="grid-column: span 2;">0</button>
         <button onclick="add('.')">.</button>
@@ -144,70 +158,71 @@ button:hover {
 <div class="footer">Love from AMIT bro ❤️</div>
 
 <script>
-const display = document.getElementById("display");
+let display = document.getElementById("display");
 
-/* Input */
-function add(val){ display.value += val; }
-function clearDisplay(){ display.value = ""; }
+function add(v){ display.value += v; }
+function clr(){ display.value = ""; }
 function del(){ display.value = display.value.slice(0,-1); }
 
-/* Typing Animation */
+/* TYPE EFFECT */
 function typeText(text){
     display.value = "";
-    display.classList.add("romantic-text");
+    display.classList.add("love-text");
 
     let i = 0;
     let interval = setInterval(()=>{
         display.value += text[i];
         i++;
         if(i >= text.length) clearInterval(interval);
-    }, 80);
+    }, 70);
 }
 
-/* Main Calculate */
-function calculate(){
+/* MAIN */
+function calc(){
     let exp = display.value;
 
     if(exp === "1+4+3"){
         typeText("Anshika ❤️ Santosh");
-        blastHearts();
-        startBackgroundHearts();
+        display.classList.add("glow");
+
+        heartBlast();
+        heartRain();
+
     } else {
         try{
-            display.classList.remove("romantic-text");
+            display.classList.remove("love-text");
             display.value = eval(exp);
-        } catch {
+        }catch{
             display.value = "Error";
         }
     }
 }
 
-/* Blast hearts */
-function blastHearts(){
+/* HEART BLAST */
+function heartBlast(){
     for(let i=0;i<30;i++){
         let h = document.createElement("div");
-        h.className = "heart";
+        h.className = "blast";
         h.innerHTML = "❤️";
         h.style.left = Math.random()*100 + "vw";
-        h.style.top = "70vh";
+        h.style.top = "60vh";
         document.body.appendChild(h);
-        setTimeout(()=>h.remove(),2000);
+        setTimeout(()=>h.remove(),1500);
     }
 }
 
-/* Continuous hearts */
-function startBackgroundHearts(){
-    for(let i=0;i<20;i++){
-        setInterval(()=>{
-            let h = document.createElement("div");
-            h.className = "bg-heart";
-            h.innerHTML = "💖";
-            h.style.left = Math.random()*100 + "vw";
-            h.style.animationDuration = (3 + Math.random()*3) + "s";
-            document.body.appendChild(h);
-            setTimeout(()=>h.remove(),6000);
-        },300);
-    }
+/* HEART RAIN (FULL SCREEN CONTINUOUS) */
+function heartRain(){
+    setInterval(()=>{
+        let h = document.createElement("div");
+        h.className = "rain-heart";
+        h.innerHTML = "💖";
+        h.style.left = Math.random()*100 + "vw";
+        h.style.animationDuration = (2 + Math.random()*3) + "s";
+        document.body.appendChild(h);
+
+        setTimeout(()=>h.remove(),5000);
+    },100);
 }
 </script>
 
