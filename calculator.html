@@ -51,22 +51,24 @@ body {
     margin-left: auto;
 }
 
-/* SCROLLING LOVE TEXT */
+/* CONTINUOUS LOVE SCROLL */
 .love-scroll {
     position: absolute;
+    display: flex;
     white-space: nowrap;
     font-family: 'Great Vibes', cursive;
-    font-size: 36px;
-    font-weight: bold;
+    font-size: 38px;
+    font-weight: 900;
     color: #ff2e63;
-    text-shadow: 0 0 10px #ff2e63;
-    animation: scrollText 12s linear infinite;
+    text-shadow: 0 0 12px #ff2e63;
+    gap: 80px;
+    animation: scrollLoop 15s linear infinite;
 }
 
-/* LEFT TO RIGHT CONTINUOUS */
-@keyframes scrollText {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
+/* LOOP ANIMATION */
+@keyframes scrollLoop {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
 /* Buttons */
@@ -173,10 +175,10 @@ function del(){
     displayText.innerText = displayText.innerText.slice(0,-1);
 }
 
-/* REMOVE SCROLL STYLE */
+/* REMOVE SCROLL */
 function removeScroll(){
     displayText.classList.remove("love-scroll");
-    displayText.style.position = "static";
+    displayText.innerHTML = displayText.innerText;
 }
 
 /* CALCULATE */
@@ -196,9 +198,14 @@ function calculate(){
     }
 }
 
-/* SHOW SCROLLING TEXT INSIDE DISPLAY */
+/* CONTINUOUS LOOP TEXT */
 function showScrollingLove(){
-    displayText.innerText = "Anshika ❤️ Santosh";
+    displayText.innerHTML = `
+        <span>Anshika ❤️ Santosh</span>
+        <span>Anshika ❤️ Santosh</span>
+        <span>Anshika ❤️ Santosh</span>
+        <span>Anshika ❤️ Santosh</span>
+    `;
     displayText.classList.add("love-scroll");
 }
 
