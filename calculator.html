@@ -6,7 +6,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-<title>Anshika</title>
+<title>Romantic Calculator</title>
 
 <style>
 body {
@@ -21,7 +21,7 @@ body {
     overflow: hidden;
 }
 
-/* Glass Calculator */
+/* Calculator */
 .calc {
     backdrop-filter: blur(15px);
     background: rgba(255,255,255,0.08);
@@ -29,20 +29,44 @@ body {
     padding: 20px;
     width: 300px;
     box-shadow: 0 0 30px rgba(255, 0, 100, 0.3);
-    z-index: 10;
 }
 
-/* Display */
-#display {
+/* DISPLAY BOX */
+#displayBox {
     width: 100%;
     height: 65px;
-    border: none;
     border-radius: 12px;
-    font-size: 22px;
-    text-align: right;
-    padding: 10px;
     background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 0 10px;
+    position: relative;
+}
+
+/* NORMAL TEXT */
+#displayText {
+    font-size: 22px;
     color: #ff4d88;
+    margin-left: auto;
+}
+
+/* LOVE SCROLL */
+.love-scroll {
+    position: absolute;
+    white-space: nowrap;
+    font-family: 'Great Vibes', cursive;
+    font-size: 34px;
+    font-weight: bold;
+    color: #ff2e63;
+    text-shadow: 0 0 10px #ff2e63;
+    animation: scrollText 10s linear infinite;
+}
+
+/* SCROLL ANIMATION */
+@keyframes scrollText {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
 }
 
 /* Buttons */
@@ -50,6 +74,7 @@ body {
     display: grid;
     grid-template-columns: repeat(4,1fr);
     gap: 10px;
+    margin-top: 15px;
 }
 
 button {
@@ -71,41 +96,11 @@ button:hover {
 .operator { background: #ff2e63; color: white; }
 .equal { background: #ff0055; color: white; grid-column: span 2; }
 
-/* FULL SCREEN LOVE */
-.full-love {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.2);
-    font-family: 'Great Vibes', cursive;
-    font-size: 70px;
-    color: #ff2e63;
-    opacity: 0;
-    z-index: 1000;
-    animation: zoomIn 2s forwards;
-}
-
-/* Zoom */
-@keyframes zoomIn {
-    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
-    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-
-/* Heart Beat */
-.beat {
-    display: inline-block;
-    animation: beat 1s infinite;
-}
-@keyframes beat {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.5); }
-}
-
 /* HEART RAIN */
 .rain-heart {
     position: absolute;
     top: -10px;
-    font-size: 22px;
+    font-size: 20px;
     color: #ff4d88;
     animation: fall linear infinite;
 }
@@ -116,7 +111,7 @@ button:hover {
     }
 }
 
-/* BLAST */
+/* HEART BLAST */
 .blast {
     position: absolute;
     font-size: 25px;
@@ -127,6 +122,7 @@ button:hover {
     100% { transform: translateY(-300px) scale(2); opacity: 0; }
 }
 
+/* Footer */
 .footer {
     margin-top: 20px;
     color: #ff4d88;
@@ -138,7 +134,10 @@ button:hover {
 <body>
 
 <div class="calc">
-    <input type="text" id="display" disabled placeholder="0">
+
+    <div id="displayBox">
+        <span id="displayText">0</span>
+    </div>
 
     <div class="buttons">
         <button onclick="clr()">C</button>
@@ -169,38 +168,52 @@ button:hover {
 <div class="footer">Love from AMIT bro ❤️</div>
 
 <script>
-let display = document.getElementById("display");
+let displayText = document.getElementById("displayText");
 
-function add(v){ display.value += v; }
-function clr(){ display.value = ""; }
-function del(){ display.value = display.value.slice(0,-1); }
+/* INPUT */
+function add(v){
+    displayText.classList.remove("love-scroll");
+    displayText.style.position = "static";
+    if(displayText.innerText === "0") displayText.innerText = "";
+    displayText.innerText += v;
+}
 
+function clr(){
+    displayText.innerText = "";
+}
+
+function del(){
+    displayText.innerText = displayText.innerText.slice(0,-1);
+}
+
+/* CALCULATE */
 function calculate(){
-    let exp = display.value;
+    let exp = displayText.innerText;
 
     if(exp === "1+4+3"){
-        display.value = "";
-        showLove();
+        showScrollingLove();
         heartBlast();
         heartRain();
     } else {
         try{
-            display.value = eval(exp);
+            displayText.classList.remove("love-scroll");
+            displayText.style.position = "static";
+            displayText.innerText = eval(exp);
         }catch{
-            display.value = "Error";
+            displayText.innerText = "Error";
         }
     }
 }
 
-function showLove(){
-    let love = document.createElement("div");
-    love.className = "full-love";
-    love.innerHTML = `Anshika <span class="beat">❤️</span> Santosh`;
-    document.body.appendChild(love);
+/* SCROLLING LOVE TEXT */
+function showScrollingLove(){
+    displayText.innerText = "Anshika ❤️ Santosh";
+    displayText.classList.add("love-scroll");
 }
 
+/* HEART BLAST */
 function heartBlast(){
-    for(let i=0;i<30;i++){
+    for(let i=0;i<25;i++){
         let h = document.createElement("div");
         h.className = "blast";
         h.innerHTML = "❤️";
@@ -211,6 +224,7 @@ function heartBlast(){
     }
 }
 
+/* HEART RAIN */
 function heartRain(){
     setInterval(()=>{
         let h = document.createElement("div");
@@ -220,7 +234,7 @@ function heartRain(){
         h.style.animationDuration = (3 + Math.random()*3) + "s";
         document.body.appendChild(h);
         setTimeout(()=>h.remove(),6000);
-    },150);
+    },200);
 }
 </script>
 
