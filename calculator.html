@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- PROPER FONT LOAD -->
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <title>Romantic Calculator</title>
@@ -24,7 +24,7 @@ body {
 
 /* Calculator */
 .calc {
-    background: #ffffff;
+    background: #fff;
     padding: 20px;
     border-radius: 30px;
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
@@ -43,15 +43,6 @@ body {
     padding: 10px;
     background: #fff0f5;
     color: #d81b60;
-}
-
-/* Romantic font (APPLIED PROPERLY) */
-.love-text {
-    font-family: 'Great Vibes', cursive !important;
-    font-size: 30px;
-    text-align: center;
-    color: #ff1744;
-    letter-spacing: 2px;
 }
 
 /* Buttons */
@@ -79,25 +70,44 @@ button:hover {
 .operator { background: #f06292; color: white; }
 .equal { background: #ff4081; color: white; grid-column: span 2; }
 
-/* GLOW EFFECT */
-.glow {
-    animation: glow 1s ease;
+/* FULL SCREEN LOVE TEXT */
+.full-love {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.3);
+    font-family: 'Great Vibes', cursive;
+    font-size: 65px;
+    color: #ff1744;
+    text-align: center;
+    opacity: 0;
+    z-index: 1000;
+    animation: zoomIn 2s forwards;
 }
-@keyframes glow {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); color: #ff0000; }
-    100% { transform: scale(1); }
+
+/* Zoom Animation */
+@keyframes zoomIn {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Heart Beat */
+.beat {
+    display: inline-block;
+    animation: beat 1s infinite;
+}
+@keyframes beat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.4); }
 }
 
 /* HEART RAIN */
 .rain-heart {
     position: absolute;
     top: -10px;
-    font-size: 18px;
-    color: red;
+    font-size: 20px;
     animation: fall linear infinite;
 }
-
 @keyframes fall {
     to {
         transform: translateY(110vh);
@@ -105,17 +115,18 @@ button:hover {
     }
 }
 
-/* EXPLOSION */
+/* HEART BLAST */
 .blast {
     position: absolute;
     font-size: 22px;
     animation: blastAnim 1.5s forwards;
 }
 @keyframes blastAnim {
-    0% { transform: scale(1); opacity: 1; }
+    0% { opacity: 1; }
     100% { transform: translateY(-300px) scale(2); opacity: 0; }
 }
 
+/* Footer */
 .footer {
     margin-top: 20px;
     color: white;
@@ -148,7 +159,7 @@ button:hover {
         <button onclick="add('1')">1</button>
         <button onclick="add('2')">2</button>
         <button onclick="add('3')">3</button>
-        <button onclick="calc()" class="equal">=</button>
+        <button onclick="calculate()" class="equal">=</button>
 
         <button onclick="add('0')" style="grid-column: span 2;">0</button>
         <button onclick="add('.')">.</button>
@@ -164,38 +175,36 @@ function add(v){ display.value += v; }
 function clr(){ display.value = ""; }
 function del(){ display.value = display.value.slice(0,-1); }
 
-/* TYPE EFFECT */
-function typeText(text){
-    display.value = "";
-    display.classList.add("love-text");
-
-    let i = 0;
-    let interval = setInterval(()=>{
-        display.value += text[i];
-        i++;
-        if(i >= text.length) clearInterval(interval);
-    }, 70);
-}
-
 /* MAIN */
-function calc(){
+function calculate(){
     let exp = display.value;
 
     if(exp === "1+4+3"){
-        typeText("Anshika ❤️ Santosh");
-        display.classList.add("glow");
+        display.value = "";
 
+        showLoveMessage();
         heartBlast();
         heartRain();
 
     } else {
         try{
-            display.classList.remove("love-text");
             display.value = eval(exp);
         }catch{
             display.value = "Error";
         }
     }
+}
+
+/* BIG LOVE TEXT */
+function showLoveMessage(){
+    let love = document.createElement("div");
+    love.className = "full-love";
+
+    love.innerHTML = `
+        Anshika <span class="beat">❤️</span> Santosh
+    `;
+
+    document.body.appendChild(love);
 }
 
 /* HEART BLAST */
@@ -207,22 +216,23 @@ function heartBlast(){
         h.style.left = Math.random()*100 + "vw";
         h.style.top = "60vh";
         document.body.appendChild(h);
+
         setTimeout(()=>h.remove(),1500);
     }
 }
 
-/* HEART RAIN (FULL SCREEN CONTINUOUS) */
+/* HEART RAIN */
 function heartRain(){
     setInterval(()=>{
         let h = document.createElement("div");
         h.className = "rain-heart";
         h.innerHTML = "💖";
         h.style.left = Math.random()*100 + "vw";
-        h.style.animationDuration = (2 + Math.random()*3) + "s";
+        h.style.animationDuration = (3 + Math.random()*3) + "s";
         document.body.appendChild(h);
 
-        setTimeout(()=>h.remove(),5000);
-    },100);
+        setTimeout(()=>h.remove(),6000);
+    },120);
 }
 </script>
 
