@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Romantic Calculator</title>
 
+<!-- Romantic Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
@@ -14,29 +17,28 @@ body {
     align-items: center;
     flex-direction: column;
     background: linear-gradient(135deg, #ff758c, #ff7eb3);
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     overflow: hidden;
 }
 
-/* Calculator Box */
+/* Calculator */
 .calc {
-    background: #fff;
+    background: white;
     padding: 20px;
     border-radius: 25px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     width: 300px;
+    z-index: 10;
 }
 
-/* Display */
 #display {
     width: 100%;
     height: 60px;
     border: none;
     border-radius: 10px;
-    font-size: 24px;
+    font-size: 22px;
     text-align: right;
     padding: 10px;
-    margin-bottom: 15px;
     background: #fff0f5;
     color: #d81b60;
 }
@@ -64,52 +66,46 @@ button:hover {
     background: #f8bbd0;
 }
 
-.operator {
-    background: #f06292;
-    color: white;
+.operator { background: #f06292; color: white; }
+.equal { background: #ff4081; color: white; grid-column: span 2; }
+
+/* Romantic Name Style */
+.romantic-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 26px;
+    text-align: center;
+    color: #ff1744;
 }
 
-.equal {
-    background: #ff4081;
-    color: white;
-    grid-column: span 2;
+/* Floating Hearts Background */
+.bg-heart {
+    position: absolute;
+    color: rgba(255,255,255,0.7);
+    font-size: 18px;
+    animation: floatUp linear infinite;
 }
 
-/* Glow animation */
-.glow {
-    animation: glow 0.8s;
+@keyframes floatUp {
+    0% { transform: translateY(100vh) scale(1); opacity: 1; }
+    100% { transform: translateY(-10vh) scale(2); opacity: 0; }
 }
 
-@keyframes glow {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); color: #ff1744; }
-    100% { transform: scale(1); }
-}
-
-/* Hearts */
+/* Blast Hearts */
 .heart {
     position: absolute;
     font-size: 20px;
-    animation: float 2s linear forwards;
+    animation: blast 2s linear forwards;
 }
 
-@keyframes float {
-    0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-400px) scale(2);
-        opacity: 0;
-    }
+@keyframes blast {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-400px); opacity: 0; }
 }
 
-/* Footer */
 .footer {
     margin-top: 20px;
-    font-weight: bold;
     color: white;
-    font-size: 16px;
+    font-weight: bold;
 }
 </style>
 </head>
@@ -121,19 +117,19 @@ button:hover {
 
     <div class="buttons">
         <button onclick="clearDisplay()">C</button>
-        <button onclick="add('/')" class="operator">/</button>
-        <button onclick="add('*')" class="operator">×</button>
+        <button onclick="add('/')">/</button>
+        <button onclick="add('*')">×</button>
         <button onclick="del()">DEL</button>
 
         <button onclick="add('7')">7</button>
         <button onclick="add('8')">8</button>
         <button onclick="add('9')">9</button>
-        <button onclick="add('-')" class="operator">-</button>
+        <button onclick="add('-')">-</button>
 
         <button onclick="add('4')">4</button>
         <button onclick="add('5')">5</button>
         <button onclick="add('6')">6</button>
-        <button onclick="add('+')" class="operator">+</button>
+        <button onclick="add('+')">+</button>
 
         <button onclick="add('1')">1</button>
         <button onclick="add('2')">2</button>
@@ -150,50 +146,67 @@ button:hover {
 <script>
 const display = document.getElementById("display");
 
-function add(val){
-    display.value += val;
-}
+/* Input */
+function add(val){ display.value += val; }
+function clearDisplay(){ display.value = ""; }
+function del(){ display.value = display.value.slice(0,-1); }
 
-function clearDisplay(){
+/* Typing Animation */
+function typeText(text){
     display.value = "";
+    display.classList.add("romantic-text");
+
+    let i = 0;
+    let interval = setInterval(()=>{
+        display.value += text[i];
+        i++;
+        if(i >= text.length) clearInterval(interval);
+    }, 80);
 }
 
-function del(){
-    display.value = display.value.slice(0,-1);
-}
-
+/* Main Calculate */
 function calculate(){
     let exp = display.value;
 
     if(exp === "1+4+3"){
-        display.value = "Anshika ❤️ Santosh";
-        display.classList.add("glow");
+        typeText("Anshika ❤️ Santosh");
         blastHearts();
+        startBackgroundHearts();
     } else {
         try{
+            display.classList.remove("romantic-text");
             display.value = eval(exp);
-            display.classList.add("glow");
         } catch {
             display.value = "Error";
         }
     }
-
-    setTimeout(()=>display.classList.remove("glow"),800);
 }
 
-/* HEART BLAST */
+/* Blast hearts */
 function blastHearts(){
-    for(let i=0;i<40;i++){
-        let heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "❤️";
+    for(let i=0;i<30;i++){
+        let h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "❤️";
+        h.style.left = Math.random()*100 + "vw";
+        h.style.top = "70vh";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),2000);
+    }
+}
 
-        heart.style.left = Math.random()*100 + "vw";
-        heart.style.top = "70vh";
-
-        document.body.appendChild(heart);
-
-        setTimeout(()=>heart.remove(),2000);
+/* Continuous hearts */
+function startBackgroundHearts(){
+    for(let i=0;i<20;i++){
+        setInterval(()=>{
+            let h = document.createElement("div");
+            h.className = "bg-heart";
+            h.innerHTML = "💖";
+            h.style.left = Math.random()*100 + "vw";
+            h.style.animationDuration = (3 + Math.random()*3) + "s";
+            document.body.appendChild(h);
+            setTimeout(()=>h.remove(),6000);
+        },300);
     }
 }
 </script>
