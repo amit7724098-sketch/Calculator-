@@ -1,143 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Stylish Calculator</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@500&display=swap" rel="stylesheet">
-
-<style>
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #1f1c2c, #928dab);
-    font-family: 'Poppins', sans-serif;
-}
-
-.calculator {
-    background: #111;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-    width: 260px;
-}
-
-#display {
-    width: 100%;
-    height: 60px;
-    font-size: 28px;
-    margin-bottom: 15px;
-    text-align: right;
-    padding: 10px;
-    border: none;
-    border-radius: 10px;
-    outline: none;
-    background: #222;
-    color: #fff;
-}
-
-.buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
-
-button {
-    height: 55px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    background: #333;
-    color: white;
-    transition: 0.2s;
-}
-
-button:hover {
-    background: #555;
-}
-
-.equal {
-    background: #6c5ce7;
-}
-
-.equal:hover {
-    background: #4834d4;
-}
-
-.special {
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 32px;
-    color: #00ffe0;
-    letter-spacing: 3px;
-    text-shadow: 0 0 10px #00ffe0, 0 0 20px #00ffe0;
-}
-</style>
-</head>
-
-<body>
-
-<div class="calculator">
-    <input type="text" id="display" disabled>
-
-    <div class="buttons">
-        <button onclick="append('7')">7</button>
-        <button onclick="append('8')">8</button>
-        <button onclick="append('9')">9</button>
-        <button onclick="append('/')">/</button>
-
-        <button onclick="append('4')">4</button>
-        <button onclick="append('5')">5</button>
-        <button onclick="append('6')">6</button>
-        <button onclick="append('*')">*</button>
-
-        <button onclick="append('1')">1</button>
-        <button onclick="append('2')">2</button>
-        <button onclick="append('3')">3</button>
-        <button onclick="append('-')">-</button>
-
-        <button onclick="append('0')">0</button>
-        <button onclick="clearDisplay()">C</button>
-        <button class="equal" onclick="calculate()">=</button>
-        <button onclick="append('+')">+</button>
-    </div>
-</div>
-
-<script>
-function append(value) {
-    let display = document.getElementById("display");
-    display.value += value;
-    display.classList.remove("special");
-}
-
-function clearDisplay() {
-    let display = document.getElementById("display");
-    display.value = "";
-    display.classList.remove("special");
-}
-
-function calculate() {
-    let display = document.getElementById("display");
-
-    try {
-        let result = eval(display.value);
-
-        if (result == 4) {
-            display.value = "Himanshi"; // ✅ FIXED NAME
-            display.classList.add("special");
-        } else {
-            display.value = result;
-            display.classList.remove("special");
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Calculator</title>
+    <style>
+        body {
+            background-color: #ffebee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-    } catch {
-        display.value = "Error";
-    }
-}
-</script>
+        .calc-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            border: 2px solid #ff80ab;
+            width: 300px;
+        }
 
+        #display {
+            width: 100%;
+            height: 60px;
+            font-size: 24px;
+            text-align: right;
+            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: none;
+            background: #fff5f8;
+            border-radius: 10px;
+            color: #d81b60;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            height: 50px;
+            border-radius: 12px;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #fce4ec;
+            color: #c2185b;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: #f8bbd0;
+        }
+
+        .operator {
+            background-color: #f06292;
+            color: white;
+        }
+
+        .operator:hover {
+            background-color: #e91e63;
+        }
+
+        .equal {
+            background-color: #ff4081;
+            color: white;
+            grid-column: span 2;
+        }
+
+        .footer {
+            margin-top: 20px;
+            color: #ad1457;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .heart {
+            color: #ff1744;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calc-container">
+        <input type="text" id="display" disabled placeholder="0">
+        <div class="buttons">
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="appendToDisplay('/')" class="operator">/</button>
+            <button onclick="appendToDisplay('*')" class="operator">×</button>
+            <button onclick="deleteLast()">DEL</button>
+            
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('-')" class="operator">-</button>
+            
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('+')" class="operator">+</button>
+            
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="calculate()" class="equal">=</button>
+            
+            <button onclick="appendToDisplay('0')" style="grid-column: span 2;">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+        </div>
+    </div>
+
+    <div class="footer">Love from AMIT bro</div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendToDisplay(value) {
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function deleteLast() {
+            display.value = display.value.slice(0, -1);
+        }
+
+        function calculate() {
+            const expression = display.value;
+            
+            // The Secret Trigger: 1+4+3
+            if (expression === "1+4+3") {
+                display.value = "Anshika ❤️ Santosh";
+            } else {
+                try {
+                    display.value = eval(expression);
+                } catch (error) {
+                    display.value = "Error";
+                }
+            }
+        }
+    </script>
 </body>
 </html>
